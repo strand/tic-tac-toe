@@ -6,11 +6,16 @@ class TicTacToe
 	def initialize(first_player = nil, mark = nil)
 		if mark == :O
 			@player_symbol, @computer_symbol = :O, :X
+		elsif mark == :X
+			@player_symbol, @computer_symbol = :X, :O
 		else
 			symbols = SYMBOLS.shuffle
 			@player_symbol, @computer_symbol = symbols.first, symbols.last
 		end
 
+		@board = { A1: " ", A2: " ", A3: " ",
+							 B1: " ", B2: " ", B3: " ",
+							 C1: " ", C2: " ", C3: " "}
 		assign_current_player(first_player)
 	end
 
@@ -27,6 +32,10 @@ class TicTacToe
 
 	def open_spots
 		%w(A1 A2 A3 B1 B2 B3 C1 C2 C3 )
+	end
+
+	def player_move
+		:A1
 	end
 
 	def computer_move
