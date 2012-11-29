@@ -101,7 +101,7 @@ Given /^there are not three symbols in a row$/ do
       :B1 => :X, :B2 => :O, :B3 => :X,
       :C1 => :O, :C2 => :X, :C3 => :O
     }
-    @game.determine_winner
+  @game.determine_winner
 end
 
 When /^there are no open spaces left on the board$/ do
@@ -112,13 +112,13 @@ Then /^the game is declared a draw$/ do
   @game.draw?.should be_true
 end
 
-When /^"(.*?)" is taken$/ do |arg1|
-  @game.board[arg1.to_sym] = :O
-  @taken_spot = arg1.to_sym
+When /^"(.*?)" is taken$/ do |position|
+  @game.board[position.to_sym] = :O
+  @taken_spot = position.to_sym
 end
 
-Then /^computer should ask me for another position "(.*?)"$/ do |arg1|
-  @game.board[arg1.to_sym] = ' '
-  @game.should_receive(:get_player_move).twice.and_return(@taken_spot, arg1)
-  @game.player_move.should eq arg1.to_sym
+Then /^computer should ask me for another position "(.*?)"$/ do |position|
+  @game.board[position.to_sym] = ' '
+  @game.should_receive(:get_player_move).twice.and_return(@taken_spot, position)
+  @game.player_move.should eq position.to_sym
 end
