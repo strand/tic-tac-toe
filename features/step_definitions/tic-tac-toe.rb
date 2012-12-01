@@ -1,5 +1,5 @@
 class TicTacToe
-	attr_accessor :player, :player_symbol, :computer_symbol, :board, :current_player, :closed_spots
+	attr_accessor :player, :player_symbol, :computer_symbol, :board, :current_player
 
 	SYMBOLS = [:X, :O]
 
@@ -14,7 +14,6 @@ class TicTacToe
 			@player_symbol, @computer_symbol = symbols.first, symbols.last
 		end
 
-		@closed_spots = []
 		@board = { A1: " ", A2: " ", A3: " ",
 							 B1: " ", B2: " ", B3: " ",
 							 C1: " ", C2: " ", C3: " "}
@@ -36,13 +35,23 @@ class TicTacToe
 	end
 
 	def open_spots
-		%w(A1 A2 A3 B1 B2 B3 C1 C2 C3 ) - @closed_spots
+		%w(A1 A2 A3 B1 B2 B3 C1 C2 C3) - self.closed_spots
+	end
+
+	def closed_spots
+		#it returns an array of spots on the board which have an x or an o.
+		array = []
+
+		self.board.each do |spot, mark|
+			array << spot.to_s if mark != " "
+		end
+
+		array
 	end
 
 	def player_move
 		move 							 = gets.chomp
 		board[move.to_sym] = @player_symbol
-		@closed_spots 		 << move
 
 		assign_current_player :next
 	end
@@ -52,7 +61,6 @@ class TicTacToe
 
 		move 							 = open_spots.sample
 		board[move.to_sym] = @computer_symbol
-		@closed_spots 		 << move
 
 		move
 	end
@@ -75,6 +83,7 @@ class TicTacToe
 	end
 
 	def spots_open?
+		true unless open_spots.length == 0 
 	end
 
 	def player_won?
@@ -97,7 +106,7 @@ class TicTacToe
 	end
 
 	def draw?
-		true if open_spots.length == 0 && !(computer_won? || player_won?)
+		true unless spots_open? || computer_won? || player_won?
 	end
 
 	def over?
