@@ -48,20 +48,24 @@ class TicTacToe
 	end
 
 	def computer_move
-		move 							 = open_spots.shuffle.first
+		assign_current_player :next
+
+		move 							 = open_spots.sample
 		board[move.to_sym] = @computer_symbol
 		@closed_spots 		 << move
 
-		assign_current_player :next
+		move
 	end
 
 	def current_state
-		puts "  | 1 | 2 | 3 "
-		puts "A | #{board[:A1]} | #{board[:A2]} | #{board[:A3]} "
-		puts "B | #{board[:B1]} | #{board[:B2]} | #{board[:B3]} "
-		puts "C | #{board[:C1]} | #{board[:C2]} | #{board[:C3]} "
+		current_board = "  | 1 | 2 | 3 \n" +
+										"A | #{board[:A1]} | #{board[:A2]} | #{board[:A3]} \n" +
+										"B | #{board[:B1]} | #{board[:B2]} | #{board[:B3]} \n" +
+										"C | #{board[:C1]} | #{board[:C2]} | #{board[:C3]} "
 
-		puts "Open spots: #{open_spots.length}"
+		puts current_board
+
+		current_board
 	end
 
 	def indicate_player_turn
