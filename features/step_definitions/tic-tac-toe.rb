@@ -22,15 +22,12 @@ class TicTacToe
 	end
 
 	def assign_current_player(flag = nil)
-		@current_player = case flag
-											when :next
-												@current_player == "Computer" ? @player : "Computer"
-											when :player
-		 										@player
-		 									when :computer
-												"Computer"
+		@current_player = case flag	
+											when :next 			then @current_player == "Computer" ? @player : "Computer"
+											when :player 		then @player
+		 									when :computer 	then "Computer"
 											else
-												[@player, "Computer"].shuffle.first
+												[@player, "Computer"].sample	
 											end
 	end
 
@@ -39,21 +36,16 @@ class TicTacToe
 	end
 
 	def closed_spots
-		#it returns an array of spots on the board which have an x or an o.
 		array = []
-
-		self.board.each do |spot, mark|
-			array << spot.to_s if mark != " "
-		end
-
+		self.board.each { |spot, mark| array << spot.to_s if mark != " " }
 		array
 	end
 
 	def player_move
+		assign_current_player :next
+
 		move 							 = gets.chomp
 		board[move.to_sym] = @player_symbol
-
-		assign_current_player :next
 	end
 
 	def computer_move
@@ -70,10 +62,6 @@ class TicTacToe
 										"A | #{board[:A1]} | #{board[:A2]} | #{board[:A3]} \n" +
 										"B | #{board[:B1]} | #{board[:B2]} | #{board[:B3]} \n" +
 										"C | #{board[:C1]} | #{board[:C2]} | #{board[:C3]} "
-
-		puts current_board
-
-		current_board
 	end
 
 	def indicate_player_turn
