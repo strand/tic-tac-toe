@@ -22,10 +22,14 @@ class TicTacToe
 
 	def current_player(flag = nil)
 		@current_player_identity = case flag
-															 when :next 			then @current_player_identity == "Computer" ? @player : "Computer"
-															 when :player 		then @player
-						 									 when :computer 	then "Computer"
-						 									 when :random 		then [@player, "Computer"].sample
+															 when :next
+															 	 @current_player_identity == "Computer" ? @player : "Computer"
+															 when :player
+															 	 @player
+						 									 when :computer
+						 									 	 "Computer"
+						 									 when :random
+						 									 	 [@player, "Computer"].sample
 															 else
 																 @current_player_identity == "Computer" ? "Computer" : @player
  															 end
@@ -42,10 +46,20 @@ class TicTacToe
 	end
 
 	def player_move
-		current_player :next
+		move 				= get_player_move
+		board[move] = @player_symbol
 
-		move 							 = gets.chomp
-		board[move.to_sym] = @player_symbol
+		current_player :next
+		move
+	end
+
+	def get_player_move
+		move = gets.chomp
+		if board[move.to_sym] == " "
+			move
+		else
+			move = get_player_move.to_sym
+		end 
 	end
 
 	def computer_move
