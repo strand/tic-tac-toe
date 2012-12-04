@@ -1,6 +1,8 @@
 require './features/step_definitions/tic-tac-toe.rb'
 
 @game = TicTacToe.new
+@game.player = gets.chomp
+
 puts @game.welcome_player
 count = 0
 

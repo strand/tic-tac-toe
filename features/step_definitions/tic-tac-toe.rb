@@ -22,8 +22,6 @@ class TicTacToe
 
 	def current_player(flag = nil)
 		@current_player_identity = case flag
-															 when :next
-															 	 @current_player_identity == "Computer" ? @player : "Computer"
 															 when :player
 															 	 @player
 						 									 when :computer
@@ -46,28 +44,24 @@ class TicTacToe
 	end
 
 	def player_move
-		move 				= get_player_move
-		board[move] = @player_symbol
+		begin
+			move 							 = get_player_move
+		end until board[move.to_sym] == " " # Keep running get_player_move until the player move is on a free space.
+		board[move.to_sym] = @player_symbol
 
-		current_player :next
-		move
+		@current_player_identity = "Computer"
+		move.to_sym
 	end
 
 	def get_player_move
 		move = gets.chomp
-		if board[move.to_sym] == " "
-			move
-		else
-			move = get_player_move.to_sym
-		end 
 	end
 
 	def computer_move
-		current_player :next
-
 		move 							 = open_spots.sample
 		board[move.to_sym] = @computer_symbol
 
+		@current_player_identity = @player
 		move
 	end
 
@@ -79,9 +73,7 @@ class TicTacToe
 	end
 
 	def indicate_player_turn
-	end
-
-	def get_player_move
+		puts "#{@player}'s Move:"
 	end
 
 	def spots_open?
