@@ -45,7 +45,7 @@ class TicTacToe
 
 	def player_move
 		begin
-			move 							 = get_player_move
+			move 						 = get_player_move
 		end until board[move.to_sym] == " " # Keep running get_player_move until the player move is on a free space.
 		board[move.to_sym] = @player_symbol
 
