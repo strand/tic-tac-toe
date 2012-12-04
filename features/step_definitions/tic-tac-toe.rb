@@ -1,13 +1,12 @@
 class TicTacToe
-	attr_accessor :player, :player_symbol, :computer_symbol, :board, :current_player
-
+	attr_accessor :player, :player_symbol, :computer_symbol, :board, :current_player_identity
 	SYMBOLS = [:X, :O]
 
 	def initialize(first_player = nil, mark = nil)
-		@player = "Renee"
-		if mark == :O
+		case mark
+		when :O
 			@player_symbol, @computer_symbol = :O, :X
-		elsif mark == :X
+		when:X
 			@player_symbol, @computer_symbol = :X, :O
 		else
 			symbols = SYMBOLS.shuffle
@@ -18,17 +17,18 @@ class TicTacToe
 							 B1: " ", B2: " ", B3: " ",
 							 C1: " ", C2: " ", C3: " "}
 
-		assign_current_player(first_player)
+		current_player(first_player)
 	end
 
-	def assign_current_player(flag = nil)
-		@current_player = case flag	
-											when :next 			then @current_player == "Computer" ? @player : "Computer"
-											when :player 		then @player
-		 									when :computer 	then "Computer"
-											else
-												[@player, "Computer"].sample	
-											end
+	def current_player(flag = nil)
+		@current_player_identity = case flag
+															 when :next 			then @current_player_identity == "Computer" ? @player : "Computer"
+															 when :player 		then @player
+						 									 when :computer 	then "Computer"
+						 									 when :random 		then [@player, "Computer"].sample
+															 else
+																 @current_player_identity == "Computer" ? "Computer" : @player
+ 															 end
 	end
 
 	def open_spots
@@ -42,14 +42,14 @@ class TicTacToe
 	end
 
 	def player_move
-		assign_current_player :next
+		current_player :next
 
 		move 							 = gets.chomp
 		board[move.to_sym] = @player_symbol
 	end
 
 	def computer_move
-		assign_current_player :next
+		current_player :next
 
 		move 							 = open_spots.sample
 		board[move.to_sym] = @computer_symbol

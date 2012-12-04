@@ -25,7 +25,7 @@ Given /^I have a started Tic\-Tac\-Toe game$/ do
   @game.player = "Renee"
 end
 
-Given /^it is my turn$/ do
+Given /^it is my turn$/ do # I believe this
   @game.current_player.should eq "Renee"
 end
 
@@ -77,11 +77,11 @@ When /^"(.*?)" is not taken$/ do |arg1|
   @old_pos.should eq " "
 end
 
-Then /^it is now the computer's turn$/ do
+Then /^it is now the computer's turn$/ do #'
   @game.current_player.should eq "Computer"
 end
 
-When /^there are three X's in a row$/ do
+When /^there are three X's in a row$/ do #'
   @game = TicTacToe.new(:computer, :X)
   @game.board[:C1] = @game.board[:B2] = @game.board[:A3] = :X
 end
